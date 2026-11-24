@@ -130,6 +130,7 @@ pub fn init_sodium() {
 
 pub fn global_init() -> bool {
     init_sodium();
+    *hbb_common::config::APP_NAME.write().unwrap() = "TechDesk360-Remote".to_owned();
     #[cfg(all(target_os = "linux", feature = "drm"))]
     crate::platform::linux::dispatch_wayland_display_probe();
     #[cfg(target_os = "linux")]
