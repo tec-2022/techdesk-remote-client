@@ -83,7 +83,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
       if (bind.isCustomClient())
         Align(
           alignment: Alignment.center,
-          child: loadPowered(context),
+          child: const SizedBox.shrink(),
         ),
       Align(
         alignment: Alignment.center,

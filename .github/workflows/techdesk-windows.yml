@@ -107,7 +107,16 @@ jobs:
         shell: powershell
         run: |
           python3 .\build.py --portable --flutter --skip-portable-pack --hwcodec --vram
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           Move-Item .\flutter\build\windows\x64\runner\Release .\techdesk360-remote
+          Copy-Item -LiteralPath .\LICENCE -Destination .\techdesk360-remote\LICENSE.txt
+          $bundle = (Resolve-Path .\techdesk360-remote).Path
+          $client = Start-Process -FilePath (Join-Path $bundle 'TechDesk360-Remote.exe') -WorkingDirectory $bundle -ArgumentList '--version' -WindowStyle Hidden -PassThru
+          if (-not $client.WaitForExit(15000)) {
+            Stop-Process -Id $client.Id
+            throw 'The client version check timed out.'
+          }
+          if ($client.ExitCode -ne 0) { throw "The client exited with code $($client.ExitCode)." }
 
       - name: Add privacy-mode helper
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c

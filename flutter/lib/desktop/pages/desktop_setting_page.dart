@@ -2595,7 +2595,7 @@ class _AboutState extends State<_About> {
       final scrollController = ScrollController();
       return SingleChildScrollView(
         controller: scrollController,
-        child: _Card(title: translate('About RustDesk'), children: [
+        child: _Card(title: 'TechDesk360 Remote', children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -2617,7 +2617,7 @@ class _AboutState extends State<_About> {
                       .marginSymmetric(vertical: 4.0)),
               InkWell(
                   onTap: () {
-                    launchUrlString('https://rustdesk.com/privacy.html');
+                    launchUrlString('https://api.lvltechmx.com/privacy');
                   },
                   child: Text(
                     translate('Privacy Statement'),
@@ -2625,7 +2625,7 @@ class _AboutState extends State<_About> {
                   ).marginSymmetric(vertical: 4.0)),
               InkWell(
                   onTap: () {
-                    launchUrlString('https://rustdesk.com');
+                    launchUrlString('https://api.lvltechmx.com/');
                   },
                   child: Text(
                     translate('Website'),
@@ -2646,11 +2646,13 @@ class _AboutState extends State<_About> {
                             'Copyright © ${DateTime.now().toString().substring(0, 4)} Purslane Tech Pte. Ltd.\n$license',
                             style: const TextStyle(color: Colors.white),
                           ),
-                          Text(
-                            translate('Slogan_tip'),
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                color: Colors.white),
+                          InkWell(
+                            onTap: () => launchUrlString(
+                                'https://github.com/tec-2022/techdesk-remote-client'),
+                            child: const Text('Código fuente / Source code',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline)),
                           )
                         ],
                       ),
