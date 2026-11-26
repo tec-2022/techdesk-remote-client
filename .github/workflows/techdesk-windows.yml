@@ -111,6 +111,10 @@ jobs:
           Move-Item .\flutter\build\windows\x64\runner\Release .\techdesk360-remote
           Copy-Item -LiteralPath .\LICENCE -Destination .\techdesk360-remote\LICENSE.txt
           $bundle = (Resolve-Path .\techdesk360-remote).Path
+          $bundledIcon = Join-Path $bundle 'data\flutter_assets\assets\icon.png'
+          if ((Get-FileHash -LiteralPath $bundledIcon).Hash -ne (Get-FileHash -LiteralPath .\flutter\assets\icon.png).Hash) {
+            throw 'The Windows bundle does not contain the TechDesk360 window icon.'
+          }
           $client = Start-Process -FilePath (Join-Path $bundle 'TechDesk360-Remote.exe') -WorkingDirectory $bundle -ArgumentList '--version' -WindowStyle Hidden -PassThru
           if (-not $client.WaitForExit(15000)) {
             Stop-Process -Id $client.Id
